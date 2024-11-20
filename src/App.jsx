@@ -1,34 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useQuiz } from "./contexts/QuizContext"
+
+import SubmitForm from "./components/SetupForm";
+import Loding from "./components/Loding";
+import Model from "./components/Model";
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  console.log("App")
+  const {
+    wating,
+    isLoading, 
+    // questions, 
+    // index, 
+    // correct, 
+    // error, 
+    // isModelOpen, 
+    // nextQuestion, 
+    // checkAnswer, 
+  } = useQuiz();
+
+  if(!wating) return <SubmitForm />;
+  if(!isLoading) return <Loding />;
+  
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <main>
+      <Model />
+      <section className="quiz">
+          <p className="correct-answers">
+            Correct Answers : X
+          </p> 
+          <article className="container">
+            <h2></h2>
+            <div className="btn-container">
+
+            </div>
+          </article>          
+      </section>
+    </main>
   )
 }
 
