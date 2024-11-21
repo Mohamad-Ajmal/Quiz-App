@@ -5,38 +5,60 @@ import Loding from "./components/Loding";
 import Model from "./components/Model";
 
 
-
 function App() {
-  console.log("App")
   const {
-    wating,
+    waiting,
     isLoading, 
-    // questions, 
-    // index, 
-    // correct, 
-    // error, 
-    // isModelOpen, 
-    // nextQuestion, 
-    // checkAnswer, 
+    questions, 
+    index, 
+    correct, 
+    nextQuestion, 
+    checkAnswer, 
   } = useQuiz();
 
-  if(!wating) return <SubmitForm />;
-  if(!isLoading) return <Loding />;
   
+
+  if(!waiting) return <SubmitForm />;
+  if(!isLoading) return <Loding />;
+
+  const { question, incorrect_answers, correct_answer } = questions[index];
+  
+  let answers = [...incorrect_answers];
+  const tempIndex = Math.floor(Math.random() * 4);
+  if (tempIndex === 3) {
+    answers.push(correct_answer)
+  }
+  else{
+    answers.push(answers[tempIndex])
+    answers[tempIndex] = correct_answer
+  }
 
   return (
     <main>
       <Model />
       <section className="quiz">
           <p className="correct-answers">
-            Correct Answers : X
+            Correct Answers :  {correct}/{index}
           </p> 
           <article className="container">
-            <h2></h2>
+            <h2 dangerouslySetInnerHTML={{ __html: question }} />
             <div className="btn-container">
-
+              {answers.map((answer, index) => {
+                return (
+                  <button
+                  key={index}
+                  className="answer-btn"
+                  onClick={()=> checkAnswer(correct_answer === answer)}
+                  >
+                    {answer}
+                  </button>
+                );
+              })}
             </div>
-          </article>          
+          </article> 
+          <button className="next-question" onClick={nextQuestion}>
+          next question
+        </button>         
       </section>
     </main>
   )

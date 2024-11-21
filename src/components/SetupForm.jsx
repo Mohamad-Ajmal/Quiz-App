@@ -1,6 +1,6 @@
 import {useQuiz} from "../contexts/QuizContext"
 export default function SubmitForm() {
-  const {handleSubmit, error} = useQuiz();
+  const {quiz, handleChange, handleSubmit, error} = useQuiz();
   return (
     <main>
       <section className="quiz quiz-small">
@@ -12,11 +12,11 @@ export default function SubmitForm() {
                     type="number"
                     name="amount"
                     id="amount"
-                    value={0}
+                    value={quiz.amount}
                     className="form-input"
                     min={1}
                     max={50}
-                    onChange={()=>{}}
+                    onChange={handleChange}
                 />
             </div>
             <div className="form-control">
@@ -25,8 +25,8 @@ export default function SubmitForm() {
                     name="category"
                     id="category"
                     className="form-input"
-                    value={"category"}
-                    onChange={()=>{}}
+                    value={quiz.category}
+                    onChange={handleChange}
                 >
                     <option value="sports">sports</option>
                     <option value="history">history</option>
@@ -39,8 +39,8 @@ export default function SubmitForm() {
               name="difficulty"
               id="difficulty"
               className="form-input"
-              value={""}
-              onChange={()=>{}}
+              value={quiz.difficulty}
+              onChange={handleChange}
             >
               <option value="easy">easy</option>
               <option value="medium">medium</option>
